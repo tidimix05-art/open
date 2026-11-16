@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BPR入門 用語集・事例集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 層: 上部固定のタブ → 検索と絞り込み → 一覧（タップで開く）。1列、最大幅720px */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --ink:#18202c; --muted:#5b6574; --line:#dfe3ea;
+  --accent:#24598f; --accent-soft:#e6eef7; --stop:#b4321f; --stop-soft:#fbece9;
+  --font:"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI",Meiryo,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --surface:#1a2029; --ink:#e7ebf1; --muted:#9aa4b2; --line:#2b3340;
+  --accent:#7fb0e4; --accent-soft:#1e2b3b; --stop:#f08a78; --stop-soft:#3a2420; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --surface:#1a2029; --ink:#e7ebf1; --muted:#9aa4b2; --line:#2b3340;
+  --accent:#7fb0e4; --accent-soft:#1e2b3b; --stop:#f08a78; --stop-soft:#3a2420; color-scheme:dark;}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.75 var(--font)}
+a{color:var(--accent)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-top:12px}
+.brand{font-weight:700;font-size:15px;letter-spacing:.02em}
+.brand small{font-weight:400;color:var(--muted);margin-left:6px}
+.tabs{display:flex;gap:4px;margin-top:8px}
+.tab{flex:1;appearance:none;border:0;background:none;font:inherit;font-weight:700;color:var(--muted);padding:10px 0;border-bottom:3px solid transparent;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--accent)}
+.tab span{font-weight:400;font-size:13px;margin-left:4px}
+main{padding:16px 0 48px}
+.view[hidden]{display:none}
+.tools{display:grid;gap:10px;margin-bottom:12px}
+.search{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;appearance:none;font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+h2.cat{font-size:13px;font-weight:700;color:var(--muted);margin:20px 0 6px;letter-spacing:.04em}
+.list{display:grid;gap:8px}
+details.item{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+details.item>summary{list-style:none;cursor:pointer;padding:12px 14px;display:grid;gap:2px}
+details.item>summary::-webkit-details-marker{display:none}
+.name{font-weight:700;font-size:16.5px;display:flex;align-items:center;gap:8px}
+.name::after{content:"";margin-left:auto;flex:none;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .15s}
+details[open]>summary .name::after{transform:rotate(-135deg)}
+.one{color:var(--muted);font-size:14.5px;line-height:1.6}
+.body{padding:0 14px 14px;border-top:1px solid var(--line)}
+.body p{margin:12px 0 0}
+.rel{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;font-size:13px;align-items:center}
+.rel b{font-weight:500;color:var(--muted)}
+.rel button{appearance:none;font:inherit;border:0;background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:2px 8px;cursor:pointer}
+.empty{color:var(--muted);padding:24px 0;text-align:center}
+.note{font-size:13.5px;line-height:1.65;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 12px;margin:0 0 12px}
+footer{border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);padding:16px 0 32px}
+.casehead{display:flex;align-items:center;gap:8px}
+.cid{flex:none;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 6px;font-variant-numeric:tabular-nums}
+.ctitle{font-weight:700;line-height:1.5}
+.meta{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.pill{font-weight:700;color:var(--stop);background:var(--stop-soft);border-radius:999px;padding:0 9px;font-variant-numeric:tabular-nums}
+.sec{margin-top:14px}
+.sec h3{font-size:13px;font-weight:700;color:var(--muted);margin:0 0 4px}
+.sec h3 small{font-weight:400}
+.sec ul,.sec ol{margin:0;padding-left:1.4em}
+.sec li{margin:2px 0}
+.sec p{margin:4px 0 0}
+.sec.stop{background:var(--stop-soft);border-left:3px solid var(--stop);border-radius:0 8px 8px 0;padding:10px 12px}
+.sec.stop h3{color:var(--stop)}
+.sec.stop strong{color:var(--stop)}
+.sec.lesson p{font-weight:500}
+.sub{font-size:13px;color:var(--muted);margin-top:10px}
+details.src{margin-top:28px;font-size:13px;color:var(--muted)}
+details.src summary{cursor:pointer;font-weight:700}
+details.src ul{padding-left:1.2em;margin:8px 0}
+details.src li{margin:6px 0;word-break:break-all}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top"><div class="brand">BPR入門<small>Sheep Arise</small></div></div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-glossary" aria-controls="glossary" aria-selected="true">用語集<span id="n-terms"></span></button>
+      <button class="tab" role="tab" id="tab-cases" aria-controls="cases" aria-selected="false">事例集<span id="n-cases"></span></button>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section id="glossary" class="view" role="tabpanel" aria-labelledby="tab-glossary">
+    <div class="tools">
+      <label for="q" class="vh" style="position:absolute;left:-9999px">言葉を検索</label>
+      <input id="q" class="search" type="search" placeholder="言葉を検索（例：UAT、属人化）" autocomplete="off">
+      <div class="chips" id="cats"></div>
+    </div>
+    <div id="terms"></div>
+    <details class="src"><summary>出典・参考資料</summary><ul id="gsrc"></ul><p id="gnote"></p></details>
+  </section>
+  <section id="cases" class="view" role="tabpanel" aria-labelledby="tab-cases" hidden>
+    <p class="note">ここに載せている事例は、国・自治体・報道などで公開されている情報をもとにまとめた学習用の教材です。Sheep Ariseが支援した事例ではありません。</p>
+    <div class="chips" id="parts" style="margin-bottom:12px"></div>
+    <div id="caselist"></div>
+    <details class="src"><summary>出典</summary><ul id="csrc"></ul></details>
+  </section>
+</main>
+<footer><div class="wrap">この教材は公開情報をもとに作成しています。掲載している企業・団体とSheep Ariseに関係はありません。</div></footer>
+<script>
+const D={"terms": [{"cat": "基本の言葉", "name": "BPR（業務改革）", "one": "改革。仕事の流れ・役割・ルールをゼロベースで考え、作り直すこと", "body": ["Business Process Re-engineering（ビジネス・プロセス・リエンジニアリング）の略です。今のやり方を前提にせず、「この作業はそもそも必要か」「誰がやるべきか」から見直します。ITやAIを手段の一つとして使いながら、組織や役割まで含めて、仕事の仕組みを作り直します。", "進め方は「アセスメント → 改革設計 → 導入推進 → 定着支援」の4段階です。"], "rel": ["業務改善", "DX（デジタル変革）", "AX（AI変革）", "アセスメント"]}, {"cat": "基本の言葉", "name": "業務改善", "one": "今のやり方のまま、部分的に良くすること", "body": ["仕事の流れや役割は変えずに、手間やミスを減らします。現場で日々積み重ねるもので、効果は部分的です。BPRとの違いは、今のやり方を前提にするかどうかです。"], "rel": ["BPR（業務改革）"]}, {"cat": "基本の言葉", "name": "DX（デジタル変革）", "one": "デジタル技術を前提に、仕事と商売の形を変えること", "body": ["Digital Transformation（デジタルトランスフォーメーション）の略です。英語圏では「Trans（〜を越えて）」を「X」と書く習慣があるため、DTではなくDXと略します。データを使って、社内の仕事だけでなく、お客さまへの価値の届け方まで変えます。ツールを入れること自体は目的ではありません。"], "rel": ["AX（AI変革）", "BPR（業務改革）"]}, {"cat": "基本の言葉", "name": "AX（AI変革）", "one": "AIを前提に、判断や仕事の進め方を根本から見直すこと", "body": ["AI Transformation（AIトランスフォーメーション）の略です。AIをときどき使う道具として足すのではなく、「どの判断や作業をAIに任せ、人は何をするか」を決め直します。人とAIの役割分担を設計するところに特徴があります。"], "rel": ["BPR（業務改革）"]}, {"cat": "基本の言葉", "name": "BPO", "one": "仕事の一部を、外部の会社にまとめて任せること", "body": ["Business Process Outsourcing（ビジネス・プロセス・アウトソーシング）の略です。経理・給与計算・コールセンターなどの決まった仕事を外部に委託します。人手不足の対策になる一方、やり方が整っていない仕事を任せると、外部でも混乱が続きます。社内に知見が残りにくい点にも注意が必要です。"], "rel": []}, {"cat": "課題を表す言葉", "name": "属人化", "one": "特定の人しかできない仕事になっていること", "body": ["手順や判断の基準が、その人の頭の中にしかない状態です。その人が休むと仕事が止まり、辞めると知識が消え、次の人にまた一から教えることになります。これは本人の問題ではなく、仕事の作り方の問題です。"], "rel": ["ブラックボックス化", "case:B4"]}, {"cat": "課題を表す言葉", "name": "ブラックボックス化", "one": "仕事の中身が、外から見えなくなっていること", "body": ["何を、どんな順番で、どんな基準でやっているのかが、担当者以外に分からない状態です。属人化が進むと起こりやすく、ミスやムダがあっても誰も気づけません。"], "rel": ["属人化", "可視化"]}, {"cat": "課題を表す言葉", "name": "ボトルネック", "one": "仕事の流れを詰まらせている一か所", "body": ["仕事全体の速さは、流れの中で一番遅いところで決まります。承認待ちや、特定の人への仕事の集中がよくある例です。ほかを速くしても、ここが変わらなければ全体は速くなりません。"], "rel": ["業務フロー"]}, {"cat": "進め方の言葉", "name": "可視化", "one": "見えていない仕事を、見える形にすること", "body": ["誰が・何を・どれだけの時間でやっているかを、図や表に書き出します。見えないものは改善できないため、BPRの最初の一歩になります。"], "rel": ["業務フロー", "アセスメント"]}, {"cat": "進め方の言葉", "name": "業務フロー", "one": "仕事の流れを、順番に描いた図", "body": ["誰が、どの順番で、何を受け取り、何を渡すかを、矢印でつないで表します。描いてみると、待ち時間や二重入力、行ったり来たりしている箇所が見つかります。"], "rel": ["可視化", "ボトルネック", "As-Is・To-Be"]}, {"cat": "進め方の言葉", "name": "As-Is・To-Be", "one": "今の姿と、あるべき姿", "body": ["As-Is（アズイズ）は今の仕事のやり方、To-Be（トゥービー）は改革後にめざすやり方です。両者を並べて、その差を埋める方法を考えるのがBPRの基本です。"], "rel": ["業務フロー", "アセスメント"]}, {"cat": "進め方の言葉", "name": "アセスメント", "one": "今の仕事を調べて、評価すること", "body": ["BPRの4段階（アセスメント → 改革設計 → 導入推進 → 定着支援）の最初の段階です。今の仕事を可視化し、かかっている時間やコスト、特定の人への依存度などを評価して、手を付けるべき課題を絞り込みます。"], "rel": ["可視化", "工数表", "BPR（業務改革）"]}, {"cat": "進め方の言葉", "name": "工数表", "one": "仕事ごとに、誰がどれだけの手間をかけているかをまとめた表", "body": ["手間の量（工数）は「何人が何時間かけたか」で表します。たとえば2人で3時間かかる仕事なら6時間分です。工数表を作ると、どの仕事に時間がかかっているかが分かり、やめる仕事やまとめる仕事を見つける材料になります。改革の前と後で比べれば、効果を数字で示せます。"], "rel": ["アセスメント", "Before-After"]}, {"cat": "進め方の言葉", "name": "PoC", "one": "本格的に始める前に、小さく試して確かめること", "body": ["Proof of Concept（プルーフ・オブ・コンセプト）の略で、日本語では「概念実証」と言います。一部の部署や仕事だけで新しいやり方を試し、効果や問題点を確かめてから広げます。うまくいかなかったときの影響を小さくできます。"], "rel": ["要件定義", "UAT"]}, {"cat": "BPRコンサルの言葉", "name": "ECRS（イクルス）", "one": "仕事を見直すときの4つの順番。最初に考えるのは「やめられないか」", "body": ["Eliminate（なくす）、Combine（まとめる）、Rearrange（入れ替える）、Simplify（簡単にする）の頭文字です。この順番で考えるのが基本で、後になるほど効果は小さくなります。まず「その作業をやめられないか」を考え、やめられないものだけを、まとめる・入れ替える・簡単にする対象にします。"], "rel": ["BPR（業務改革）"]}, {"cat": "BPRコンサルの言葉", "name": "ペインポイント", "one": "お客さまが一番困っていること", "body": ["英語の「Pain Point（痛いところ）」から来た言葉です。お客さまが自分で言葉にしている困りごとだけでなく、まだ気づいていない困りごとも含みます。BPRの提案は、ペインポイントをつかむところから始まります。"], "rel": ["ボトルネック", "クイックウィン"]}, {"cat": "BPRコンサルの言葉", "name": "クイックウィン", "one": "短い期間で出せる、小さな成果", "body": ["英語の「Quick Win（すぐに得られる勝利）」から来た言葉です。大きな改革は成果が出るまで時間がかかるため、最初にすぐ効果が出る取り組みを選んで実行し、現場や経営者の信頼を得ます。"], "rel": ["ペインポイント", "チェンジマネジメント"]}, {"cat": "BPRコンサルの言葉", "name": "フィット＆ギャップ", "one": "今の仕事とシステム（またはあるべき姿）の、合う所と合わない所を洗い出すこと", "body": ["英語の「Fit and Gap」から来た言葉で、「フィットギャップ分析」とも言います。合わない所（ギャップ）について、システム側を作り変えるのか、仕事のやり方を変えるのか、その仕事自体をやめるのかを決めます。"], "rel": ["As-Is・To-Be", "スクラッチ／パッケージ"]}, {"cat": "BPRコンサルの言葉", "name": "チェンジマネジメント", "one": "新しいやり方を、現場に受け入れてもらうための進め方", "body": ["英語の「Change Management」から来た言葉です。仕事のやり方を変えると、慣れたやり方を変えたくない人や、不安を感じる人が必ず出てきます。目的の説明、関わる人への働きかけ、教え方の工夫などを計画的に行い、新しいやり方が使われ続ける状態をつくります。"], "rel": ["ステークホルダー", "クイックウィン"]}, {"cat": "システム開発の言葉", "name": "ベンダー", "one": "システムやサービスを提供する会社", "body": ["英語の「Vendor（売り手）」から来た言葉です。ソフトウェアを作って売る会社、システムの開発を請け負う会社、機器を販売する会社などをまとめてこう呼びます。"], "rel": ["SIer（エスアイヤー）", "RFP"]}, {"cat": "システム開発の言葉", "name": "SIer（エスアイヤー）", "one": "システムの設計から開発・導入までを、まとめて請け負う会社", "body": ["System Integrator（システム・インテグレーター）を縮めた、日本独自の呼び方です。お客さまの要望に合わせて、複数の製品や技術を組み合わせ、一つのシステムとして作り上げます。"], "rel": ["ベンダー", "要件定義"]}, {"cat": "システム開発の言葉", "name": "PM／PMO", "one": "プロジェクトの責任者／プロジェクトの管理を支える役割やチーム", "body": ["PMはProject Manager（プロジェクト・マネージャー）の略で、プロジェクト全体の計画と進行に責任を持つ人です。PMOはProject Management Office（プロジェクト・マネジメント・オフィス）の略で、進み具合の管理や課題の整理など、PMを支える役割やチームを指します。"], "rel": ["WBS", "ロール＆レスポンシビリティ（R&R）"]}, {"cat": "システム開発の言葉", "name": "RFI", "one": "情報提供の依頼書", "body": ["Request for Information（リクエスト・フォー・インフォメーション）の略です。システムや外部サービスを選ぶ前に、各社の製品・サービス・実績などの情報を集めるために出す依頼書です。RFIで候補を絞り込んでから、RFPを出すのが一般的な流れです。"], "rel": ["RFP"]}, {"cat": "システム開発の言葉", "name": "RFP", "one": "提案と見積の依頼書", "body": ["Request for Proposal（リクエスト・フォー・プロポーザル）の略で、日本語では「提案依頼書」と言います。発注する側が、実現したいことや条件をまとめ、複数の会社に提案と見積を依頼する文書です。仕事の整理ができていないと、RFPに「何を実現したいか」をはっきり書けません。"], "rel": ["RFI", "要件定義"]}, {"cat": "システム開発の言葉", "name": "要件定義", "one": "システムや新しい仕事の進め方で「何ができればよいか」を決めること", "body": ["発注する側と作る側で「何を作るか」の認識を合わせ、文書にまとめる工程です。ここが曖昧なまま進めると、完成してから「思っていたものと違う」となり、作り直しが発生します。"], "rel": ["RFP", "UAT"]}, {"cat": "システム開発の言葉", "name": "スクラッチ／パッケージ", "one": "システムを一から作るか、既製品を使うか", "body": ["スクラッチは、お客さまの仕事に合わせて一から作る方法です。自由度は高いですが、費用と期間がかかります。パッケージは、すでにある製品を使う方法です。早く安く導入できますが、仕事のやり方を製品に合わせる必要が出てきます。"], "rel": ["フィット＆ギャップ", "SaaS（サース）"]}, {"cat": "システム開発の言葉", "name": "SaaS（サース）", "one": "インターネット経由で使う、月額制などのソフトウェア", "body": ["Software as a Service（ソフトウェア・アズ・ア・サービス）の略です。自社でソフトを持たず、インターネットにつないで利用します。会計、勤怠管理、顧客管理など、多くの分野で使われています。"], "rel": ["オンプレミス／クラウド", "スクラッチ／パッケージ"]}, {"cat": "システム開発の言葉", "name": "ノーコード／ローコード", "one": "プログラムをほとんど書かずに、アプリを作る方法", "body": ["ノーコードはプログラムを書かずに、ローコードは少しだけ書いてアプリを作る方法です。画面上で部品を組み合わせて作れるため、専門の技術者でなくても、簡単な業務アプリなら社内で作れます。"], "rel": ["スクラッチ／パッケージ"]}, {"cat": "システム開発の言葉", "name": "ERP／CRM", "one": "会社の基幹業務をまとめるシステム／お客さまの情報を管理するシステム", "body": ["ERPはEnterprise Resource Planning（エンタープライズ・リソース・プランニング）の略で、会計・販売・在庫・人事などの情報を一つにまとめて管理するシステムです。CRMはCustomer Relationship Management（カスタマー・リレーションシップ・マネジメント）の略で、お客さまの情報ややりとりの履歴を管理するシステムです。"], "rel": ["スクラッチ／パッケージ", "SaaS（サース）"]}, {"cat": "システム開発の言葉", "name": "API", "one": "システム同士をつないで、データをやりとりするための窓口", "body": ["Application Programming Interface（アプリケーション・プログラミング・インターフェース）の略です。APIがあるシステム同士なら、人が手で写さなくても、データを自動で受け渡しできます。"], "rel": ["RPA"]}, {"cat": "システム開発の言葉", "name": "オンプレミス／クラウド", "one": "自社で機器を持って運用する形／インターネット上のサービスを使う形", "body": ["オンプレミスは、サーバーなどの機器を自社で用意して運用する形です。クラウドは、インターネット上のサービスを借りて使う形で、機器を持たずに済みます。"], "rel": ["SaaS（サース）"]}, {"cat": "システム開発の言葉", "name": "レガシーシステム", "one": "古くなり、変えにくくなったシステム", "body": ["英語の「Legacy（遺産）」から来た言葉です。長年使い続けて中身が複雑になり、作った人もいなくなって、直すのに時間と費用がかかる状態のシステムを指します。"], "rel": ["マイグレーション", "ブラックボックス化"]}, {"cat": "システム開発の言葉", "name": "WBS", "one": "プロジェクトの作業を細かく分けた一覧", "body": ["Work Breakdown Structure（ワーク・ブレイクダウン・ストラクチャー）の略です。大きな作業を小さな作業に分けて一覧にし、それぞれに担当と期限を決めます。進み具合を管理する土台になります。"], "rel": ["ロール＆レスポンシビリティ（R&R）", "スコープ"]}, {"cat": "システム開発の言葉", "name": "ウォーターフォール／アジャイル", "one": "工程を順番に進める開発方法／小さく作って直しながら進める開発方法", "body": ["ウォーターフォールは、要件定義・設計・開発・テストを順番に進め、前の工程に戻らない前提の方法です。アジャイルは、小さな単位で作っては試し、使う人の意見を聞きながら直していく方法です。"], "rel": ["要件定義", "WBS"]}, {"cat": "システム開発の言葉", "name": "QCD", "one": "品質・コスト・納期。プロジェクトで守るべき3つ", "body": ["Quality（品質）、Cost（コスト）、Delivery（納期）の頭文字です。どれか一つを優先すると、ほかの二つに影響が出ます。たとえば納期を早めれば、品質かコストに無理がかかります。"], "rel": ["スコープ"]}, {"cat": "システム開発の言葉", "name": "UT", "one": "部品ごとに、正しく動くかを確かめるテスト", "body": ["Unit Test（ユニット・テスト）の略で、日本語では「単体テスト」と言います。作った機能を一つずつ確かめるテストで、SIT・UATより前に、作る側が行います。"], "rel": ["SIT", "UAT"]}, {"cat": "システム開発の言葉", "name": "SIT", "one": "つなげた状態で、システム全体が正しく動くかを確かめるテスト", "body": ["System Integration Test（システム・インテグレーション・テスト）の略で、日本語では「結合テスト」と呼ばれることが多いです。個別に作った機能やシステムをつなげて、データの受け渡しなどが正しく行われるかを、主に作る側が確認します。"], "rel": ["UAT"]}, {"cat": "システム開発の言葉", "name": "UAT", "one": "使う側が、自分たちの仕事で使えるかを確かめるテスト", "body": ["User Acceptance Test（ユーザー・アクセプタンス・テスト）の略で、日本語では「受け入れテスト」と言います。完成したシステムを、実際に使う発注側が、普段の仕事の流れに沿って試します。ここで問題がなければ、本番での利用を始めます。"], "rel": ["SIT", "要件定義"]}, {"cat": "システム開発の言葉", "name": "マイグレーション", "one": "古いシステムから新しいシステムへ、データや仕組みを移すこと", "body": ["英語の「Migration（移住）」から来た言葉です。データの移し替えのほか、新しい環境でも同じように動くかの確認も含みます。"], "rel": ["レガシーシステム", "カットオーバー"]}, {"cat": "システム開発の言葉", "name": "カットオーバー", "one": "新しいシステムや新しい仕事のやり方に、本番で切り替えること", "body": ["英語の「Cutover（切り替え）」から来た言葉です。古いやり方を止めて新しいやり方を始める日を「カットオーバー日」と呼びます。切り替えの手順や、問題が起きたときに元に戻す方法を事前に決めておきます。"], "rel": ["UAT", "マイグレーション"]}, {"cat": "システム開発の言葉", "name": "KPI", "one": "目標にどれだけ近づいたかを測る数字", "body": ["Key Performance Indicator（キー・パフォーマンス・インディケーター）の略で、日本語では「重要業績評価指標」と言います。たとえば、やめた作業の数、ある仕事にかかる時間、残業時間などです。取り組みの前に決めておくと、効果を確かめやすくなります。"], "rel": ["ROI", "Before-After"]}, {"cat": "システム開発の言葉", "name": "ROI", "one": "かけた費用に対して、どれだけの効果があったか", "body": ["Return on Investment（リターン・オン・インベストメント）の略で、日本語では「投資対効果」と言います。システムの導入や外部への依頼に使ったお金に対して、削減できた費用や時間がどれだけあったかを比べます。"], "rel": ["KPI"]}, {"cat": "システム開発の言葉", "name": "RPA", "one": "パソコン上の決まった操作を、ソフトウェアのロボットに任せる仕組み", "body": ["Robotic Process Automation（ロボティック・プロセス・オートメーション）の略です。データの転記や入力など、同じ手順を繰り返す作業に向いています。ただし、必要のない作業をロボットに任せても、ムダはなくなりません。先にやめられる作業をやめてから使います。"], "rel": ["API", "ECRS（イクルス）"]}, {"cat": "資料・会議でよく使う言葉", "name": "Before-After", "one": "取り組みの前と後を、並べて比べること", "body": ["作業時間、人数、やめた作業の数などを並べて、効果を示します。As-Is・To-Beが「これから」を設計するときに使うのに対し、Before-Afterは「実際にどう変わったか」を示すときに使います。"], "rel": ["As-Is・To-Be", "KPI"]}, {"cat": "資料・会議でよく使う言葉", "name": "メリデメ", "one": "メリット（良い点）とデメリット（悪い点）", "body": ["「メリット・デメリット」を縮めた言い方です。いくつかの案を比べるときに、それぞれの良い点と悪い点を並べて書きます。"], "rel": ["プロコン"]}, {"cat": "資料・会議でよく使う言葉", "name": "プロコン", "one": "賛成の理由と反対の理由、長所と短所", "body": ["英語の「Pros and Cons（プロズ・アンド・コンズ）」を縮めた言い方です。メリデメとほぼ同じ意味で使われます。"], "rel": ["メリデメ"]}, {"cat": "資料・会議でよく使う言葉", "name": "ロール＆レスポンシビリティ（R&R）", "one": "誰がどの役割を持ち、どこまで責任を負うか", "body": ["Role and Responsibility（ロール・アンド・レスポンシビリティ）の略です。「この作業は誰がやるのか」「誰が決めるのか」が曖昧だと、抜けや二重の作業が生まれます。BPRでは、やめる作業・移す作業とあわせて決め直します。"], "rel": ["WBS", "属人化"]}, {"cat": "資料・会議でよく使う言葉", "name": "スコープ", "one": "取り組みの範囲", "body": ["どの部署の、どの仕事までを対象にするかを指します。最初に決めておかないと、途中で対象が広がり続け、終わらなくなります。"], "rel": ["WBS", "ステークホルダー"]}, {"cat": "資料・会議でよく使う言葉", "name": "ステークホルダー", "one": "取り組みに関わる人、影響を受ける人", "body": ["経営者、現場の担当者、取引先、お客さまなどです。仕事のやり方を変えると影響を受ける人が必ずいるため、早い段階で誰が関わるのかを洗い出しておきます。"], "rel": ["スコープ"]}], "gsrc": [{"t": "経済産業省「デジタルガバナンス・コード2.0」（2022年9月）：DXの定義", "u": "https://www.meti.go.jp/policy/it_policy/investment/dgc/dgc2.pdf"}, {"t": "近畿経済産業局「DXに関する経済産業省の施策紹介」（2023年3月）：デジタイゼーション（データ化）・デジタライゼーション・DXの3段階", "u": "https://www.kansai.meti.go.jp/2-7it/k-IoTsuisin/DXsesaku_ver1.pdf"}, {"t": "内閣官房「AX社会実装関係府省庁連絡会議の開催について」（2026年10月21日 関係府省庁申合せ）：AXの定義", "u": "https://www.cas.go.jp/jp/seisaku/axkaigi/pdf/konkyo.pdf"}, {"t": "Michael Hammer, James Champy『Reengineering the Corporation』（1993年）：BPRの提唱", "u": ""}, {"t": "中小企業庁「2018年版 中小企業白書」第2部第2章「生産性向上の鍵となる業務プロセスの見直し」：業務の標準化・マニュアル化、不要業務の見直し、見える化、業務分担の見直し", "u": "https://www.chusho.meti.go.jp/pamflet/hakusyo/H30/h30/html/b2_2_1_0.html"}], "gnote": "AXの定義は2026年10月時点のものです。政府は年末に向けて内容の整理を進めています。", "cases": [{"id": "A1", "part": "A. 有名事例", "title": "紙と口頭の連絡をやめ、会社ごと立て直す ── 元湯 陣屋（宿泊）", "industry": "宿泊", "sub": "宿泊｜神奈川県・鶴巻温泉の老舗旅館", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>2009年、10億円の負債を抱え、倒産の危機にあった</li>\n<li>予約台帳がネット用と紙の2つに分かれ、顧客情報は前の女将の頭の中、営業情報は担当者の手帳の中にあった</li>\n<li>連絡は紙の予定表、昼礼・夕礼、連絡ノート、ホワイトボードで行っていた</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>紙の予定表を<strong>廃止</strong>した</li>\n<li>昼礼を<strong>やめた</strong></li>\n<li>夕礼を<strong>やめた</strong></li>\n<li>連絡ノートを<strong>廃止</strong>した</li>\n<li>ホワイトボードを<strong>廃止</strong>した</li>\n<li>部屋まで食事を運ぶことを<strong>やめ</strong>、食事処での提供に変えた</li>\n<li>毎日の営業を<strong>やめ</strong>、休館日を設けた</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>報告・連絡・承認・勤怠・発注依頼・修理依頼を、すべて一つのシステムに集めた</li>\n</ul>"}, {"label": "After（数字）", "aside": "", "html": "<ul>\n<li>人件費：約40%削減</li>\n<li>売上：1.5倍（※料理の質を上げて単価を上げるなど、営業面の取り組みの効果も含む）</li>\n<li>働き方：完全週休2日（宿泊営業は週3日休館）にしながら、業界屈指の年収水準を実現</li>\n</ul>\n<p>※売上・人件費の数字の出典は、企業の広告記事（Forbes JAPAN BrandVoice）です。</p>"}, {"label": "この事例で伝わること", "aside": "", "html": "<p>情報を紙や人の頭に散らばらせる仕事のやり方を、まとめてやめた。やめることを積み重ねれば、中小企業でも会社ごと変わる。</p>"}]}, {"id": "A2", "part": "A. 有名事例", "title": "勘に頼る仕事をやめ、同じ人数で回せる量を増やす ── ゑびや（飲食）", "industry": "飲食", "sub": "飲食｜三重県・伊勢の食堂（1912年創業、スタッフ約50人）", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>手切りの食券とそろばんで商売をしていた</li>\n<li>仕入れや人の配置を、経験と勘で決めていた</li>\n<li>ご飯を毎日6升炊き、余らせていた</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>手切りの食券とそろばんでの会計を<strong>やめた</strong></li>\n<li>経験と勘で仕入れや人の配置を決めることを<strong>やめた</strong></li>\n<li>ご飯の炊きすぎを<strong>やめた</strong>（1日6升 → 2升）</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>社長自らが業務の流れを見直し、仕事をシステム化した</li>\n<li>天気・曜日・近くの宿泊者数などのデータから、翌日の来客数と注文数を予測する仕組みを作った（的中率約9割）</li>\n<li>空いた人手を、キッチンから広報へ移すなど、役割を変えた</li>\n</ul>"}, {"label": "After（数字）", "aside": "", "html": "<ul>\n<li>炊飯量：1日6升 → 2升（食材のムダの削減）</li>\n<li>従業員1人あたりの年間売上：396万円 → 1,073万円</li>\n<li>売上：約1億円 → 約5億円、スタッフは約50人のまま（※店舗改装・メニュー一新・土産物店の併設など、営業面の取り組みの効果も含む）</li>\n</ul>"}, {"label": "この事例で伝わること", "aside": "", "html": "<p>「勘」に頼るやり方をやめ、仕組みに置き換えると、同じ人数で回せる量が変わる。やめた後に、AIの活用（変革）が乗った例でもある。</p>"}]}, {"id": "B1", "part": "B. 症状パターン", "title": "見積・受注の手間で営業が回らない ── サカタ製作所（製造）", "industry": "製造", "sub": "製造｜新潟県の金属屋根部品メーカー（155名）", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>長時間労働が続いており、社内の講演会で専門家からその弊害を指摘された</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>お客さまの見積を社内で作る作業を<strong>やめ</strong>、お客さま自身がウェブで見積もれる形にした</li>\n<li>残業を前提にした働き方を<strong>やめ</strong>、「残業ゼロ」を経営方針に掲げた</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>見積システムを開発して、ウェブに公開した</li>\n<li>基幹システムを新しくし、受注状況に合わせて最適な生産計画を作れるようにした</li>\n<li>時間内に仕事を終える社員を評価する仕組みにした</li>\n</ul>"}, {"label": "After（数字）", "aside": "", "html": "<ul>\n<li>作業時間：3日かかっていた作業が5分に</li>\n<li>残業：1人あたり月平均 約18時間 → 約1時間（※評価制度の見直しの効果も含む）</li>\n</ul>"}]}, {"id": "B2", "part": "B. 症状パターン", "title": "仕事が増える一方で減らない ── 愛知県の卸売業（卸売）", "industry": "卸売", "sub": "卸売｜愛知県の卸売業（92名、社名非公表）", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>新しい業務を提案した人を高く評価する制度だったため、多くの社員が新しい業務を提案してくれていた</li>\n<li>その一方で、業務は増える一方になり、社員が疲れ切っていた</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>業務そのものを見直し、<strong>廃止</strong>した（廃止した件数は非公表）</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>廃止した業務が売上や業績にどれだけ影響したかを評価し、その結果を経営戦略に使った</li>\n</ul>"}, {"label": "After", "aside": "", "html": "<ul>\n<li>業務の負担が平準化され、長時間労働が解消した</li>\n<li>残業時間の上限（36協定）を引き下げられた</li>\n<li>ムダのない形で新規事業を立ち上げられるようになった</li>\n<li>※具体的な数字は公表されていません</li>\n</ul>"}]}, {"id": "B3", "part": "B. 症状パターン", "title": "繁忙期に休日出勤が当たり前 ── イナバ自動車学校（教習所）", "industry": "教習所", "sub": "教習所｜鳥取県の自動車教習所（67名）", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>繁忙期は休日出勤が当たり前で、残業が特定の時期に集中していた</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>繁忙期の休日出勤を<strong>やめた</strong>（0日に）</li>\n<li>休日出勤を前提に、繁忙期の受け入れ生徒数・教習数を決めることを<strong>やめた</strong></li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>休日出勤を前提としない勤務計画に変えた</li>\n<li>閑散期の教習（大型特殊・二輪・ドローン講習など）を充実させ、1年の仕事量の波をならした</li>\n<li>3か月単位の変形労働時間制を入れ、残業の割増率を法定より高い50%に上げた</li>\n</ul>"}, {"label": "After（数字）", "aside": "", "html": "<ul>\n<li>繁忙期の休日出勤：0日に</li>\n<li>平均の残業時間：82時間 → 24時間</li>\n<li>繁忙期の最長残業時間：100時間（2017年9月）→ 60時間（2025年9月）</li>\n<li>年間の所定休日：4日増</li>\n<li>※労働時間制度の変更の効果も含む</li>\n</ul>"}]}, {"id": "B4", "part": "B. 症状パターン", "title": "見積が経験と勘頼み・同じ内容を何度も入力 ── ミサキ（建設）", "industry": "建設", "sub": "建設｜京都市の耐震補強工事会社", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>受注や施工の状況を、会社としてリアルタイムにつかめていなかった</li>\n<li>約1,000種類ある部材の原価、職人の熟練度、工事の難しさによって値段が変わるため、見積は経験と勘に頼っていた</li>\n<li>採算を確認するには、何枚もの帳票を広げる必要があった</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>会計ソフトへの再入力（転記）を<strong>廃止</strong>した</li>\n<li>紙の手配書を<strong>廃止</strong>した</li>\n<li>経験と勘に頼った見積を<strong>やめた</strong></li>\n<li>何枚もの帳票を広げて採算を確認する作業を<strong>やめた</strong></li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>業務を棚卸しして見える化し、見積から会計までを一続きで行う業務の流れに作り直した</li>\n<li>見積を入力した時点で原価と粗利が分かるようにし、営業担当者が採算を意識できるようにした</li>\n</ul>"}, {"label": "After（数字）", "aside": "", "html": "<ul>\n<li>作業時間：見積・受注・採算管理・会計までの作業時間が約7割削減</li>\n<li>残業：1人あたり約2時間削減し、あわせて賃上げを実施</li>\n<li>見積：場所を問わず、5分で正確に出せるように</li>\n<li>採用：社員の平均年齢が約10歳若返った</li>\n</ul>"}]}, {"id": "C1", "part": "C. 組織パターン", "title": "周辺業務を切り出し、専門職を本業に集中させる ── 医師事務作業補助者（医療）", "industry": "医療", "sub": "医療｜全国の病院（調査回答1,354施設）", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>勤務医が、診断書などの書類作成や診療記録の入力といった事務作業に追われていた</li>\n<li>事務作業の負担が、勤務医の疲れや、病院を辞める原因の一つになっていた</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>医師自身が診断書などの書類を作ることを<strong>やめた</strong></li>\n<li>医師自身が診療記録を入力することを<strong>やめた</strong></li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>これらの作業を、新しく置いた「医師事務作業補助者」に移した（役割分担の変更）</li>\n<li>2000年頃から各地の病院で自主的に始まり、2008年に診療報酬で後押しされてから全国に広がった</li>\n</ul>"}, {"label": "After（数字）", "aside": "補助者を配置した病院への調査（2019年、回答1,354施設）", "html": "<ul>\n<li>医師の事務作業負担：96.9%の病院で「良くなった」</li>\n<li>医師の精神的負担：72.7%の病院で「良くなった」</li>\n<li>医師の残業時間：49.0%の病院で「良くなった」</li>\n</ul>"}, {"label": "この事例で伝わること", "aside": "", "html": "<p>専門職が専門外の作業を抱えていると、本業の時間が削られる。「その人がやるのをやめる」と決めること自体が、大きな改革になる。</p>"}]}, {"id": "C2", "part": "C. 組織パターン", "title": "バトンリレーをやめ、窓口を一つにする ── 北見市の「書かない窓口」（自治体）", "industry": "自治体", "sub": "自治体｜北海道北見市", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>住民が窓口で申請書を一から手書きし、職員がその内容をシステムに入力し直していた</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>住民が申請書を手書きすることを<strong>やめた</strong></li>\n<li>申請書を書くための記載台を<strong>廃止</strong>した</li>\n<li>職員が申請内容をシステムに入力し直す作業（転記）を<strong>廃止</strong>した</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>システムを入れる前に、まず業務を徹底的に見直した（BPR）</li>\n<li>職員が聞き取りながら申請書の作成を支援し、そのとき作られたデータを、証明書の発行など裏側の処理にもそのまま使うようにした</li>\n</ul>"}, {"label": "After", "aside": "", "html": "<ul>\n<li>住民は申請書を書かなくてよくなった</li>\n<li>北見市の取り組みは全国の自治体に広がり、北見市には他の自治体に知見を伝えるBPRアドバイザーもいる</li>\n<li>参考：別の自治体では、引越しの届出窓口で他の課の手続きもまとめて受け付ける形にし、来庁者が窓口にいる時間が約半分になった</li>\n</ul>"}, {"label": "この事例で伝わること", "aside": "", "html": "<p>整理されていない業務にシステムを入れても効果は出ない。先にやめる作業を決め、システムは後からついてくる。</p>"}]}, {"id": "C3", "part": "C. 組織パターン", "title": "バラバラなやり方を揃えて、一か所に集める ── AGホールディングス（多業種グループ）", "industry": "多業種グループ", "sub": "多業種｜医療・福祉・製造など約20社のグループ", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>グループ各社が別々の会計ソフトを使い、経理のやり方がバラバラだった</li>\n<li>各社がExcelや紙で集計した数字を、本部がもう一度入力し直していた</li>\n<li>数字が出るまで1〜2か月かかり、「4月の数字が6月にならないと見えない」状態だった</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>各社がバラバラの会計ソフトを使うことを<strong>やめた</strong></li>\n<li>各社がExcelや紙で集計することを<strong>やめた</strong></li>\n<li>本部で各社の数字を入力し直す作業（転記）を<strong>廃止</strong>した</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>グループの会計を本部に一元化し、各社と本部が同じ数字を同時に見られるようにした</li>\n</ul>"}, {"label": "After（数字）", "aside": "", "html": "<ul>\n<li>数字が出るまでの時間：1〜2か月遅れ → リアルタイム</li>\n<li>業務量：最大で5分の1に</li>\n<li>体制：小さな拠点では、経理を1人で回せる見通しが立った</li>\n</ul>\n<p>※出典は会計ソフト会社の導入事例です。</p>"}, {"label": "この事例で伝わること", "aside": "", "html": "<p>拠点や会社ごとにやり方が違うと、まとめる側に二度手間が生まれる。バラバラのやり方をやめて一か所に集めると、人数も時間も大きく減る。</p>"}]}, {"id": "C4", "part": "C. 組織パターン", "title": "働き方の型ごと組み直す ── ウェルフェア三重（介護）", "industry": "介護", "sub": "介護｜三重県鈴鹿市の介護付き有料老人ホーム", "count": "", "secs": [{"label": "Before", "aside": "", "html": "<ul>\n<li>介護の仕事は離職率が高く、この施設も求人への応募が少なかった</li>\n</ul>"}, {"label": "やめたこと", "aside": "", "html": "<ol>\n<li>同じ職員が日勤と夜勤を交代で受け持つ勤務の組み方を<strong>やめ</strong>、日勤と夜勤を分業にした（2018年）</li>\n</ol>"}, {"label": "代わりにしたこと", "aside": "", "html": "<ul>\n<li>日勤は1日10時間×週4日勤務とし、週休3日（年間休日156日）にした</li>\n<li>夜勤は、夜勤を希望する専従の2人が1年を半分ずつ分担する形にした（年間休日182日）</li>\n<li>あわせて介護記録ソフトを入れ、仕事の効率化も進めた</li>\n</ul>"}, {"label": "After", "aside": "", "html": "<ul>\n<li>応募の少なかった施設で、人材を確保できた</li>\n<li>職員の意欲が高まり、離職率も下がった</li>\n</ul>"}, {"label": "この事例で伝わること", "aside": "", "html": "<p>人が集まらないのは、仕事の中身ではなく「働き方の型」が原因のこともある。これまでの勤務の組み方をやめることも、BPRの一つ。</p>"}]}], "csrc": [{"t": "A1：日本の人事部「陣屋 宮﨑知子さんインタビュー」", "u": "https://jinjibu.jp/hrt/article/detl/techactivities/2078/"}, {"t": "A1：中小企業庁 資料（陣屋の経営改善）", "u": "https://www.chusho.meti.go.jp/koukai/kenkyukai/smartsme/2017/170419smartsme03B.pdf"}, {"t": "A1：中小企業庁 資料（陣屋コネクトの社内普及活動）", "u": "https://www.chusho.meti.go.jp/koukai/shingikai/kihonmondai/2015/download/151221kihonmondai3.pdf"}, {"t": "A1：Forbes JAPAN BrandVoice「売上1.5倍&人件費40%減!老舗旅館のクラウド改革」（企業広告記事）", "u": "https://forbesjapan.com/articles/detail/16265"}, {"t": "A1：陣屋コネクト（完全週休2日・年収水準）", "u": "https://www.wantedly.com/projects/730792"}, {"t": "A2：中小機構 J-Net21（ゑびや）", "u": "https://j-net21.smrj.go.jp/special/news/ffsr2800000027t0.html"}, {"t": "A2：関西経済連合会 ICT・IoT・AI等活用事例集（ゑびや）", "u": "https://www.kankeiren.or.jp/iot/pdf/iot37.pdf"}, {"t": "A2：労働政策研究・研修機構 Business Labor Trend 2019.7（ゑびや）", "u": "https://www.jil.go.jp/kokunai/blt/backnumber/2019/07/030-033.pdf"}, {"t": "B1：厚生労働省「働き方改革」の成功例（サカタ製作所）", "u": "https://www.mhlw.go.jp/content/000589176.pdf"}, {"t": "B1：ミラサポplus「事例から学ぶ！働き方改革」", "u": "https://mirasapo-plus.go.jp/hint/19803/"}, {"t": "B2：愛知労働局 働き方改革応援レシピ（卸売業）", "u": "https://jsite.mhlw.go.jp/aichi-roudoukyoku/content/contents/000304146.pdf"}, {"t": "B3：厚生労働省 働き方改革推進支援センター ステップアップ事例2025（イナバ自動車学校）", "u": "https://hatarakikatakaikaku.mhlw.go.jp/assets/img/download/stepup_consulting_case2025.pdf"}, {"t": "B4：京都市・京都府中小企業団体中央会「京都市中小企業デジタル化推進事業 成果事例集（令和3年度）」（ミサキ）", "u": "https://www.chuokai-kyoto.or.jp/whatsnew/r3seikajirei041122.pdf"}, {"t": "C1：日本医師事務作業補助研究会（厚生労働省 タスク・シフティング推進に関するヒアリング資料）", "u": "https://www.mhlw.go.jp/content/10803000/000518062.pdf"}, {"t": "C1：厚生労働省 チーム医療の具体的実践事例（医療クラーク）", "u": "https://www.mhlw.go.jp/stf/shingi/2r985200000128zk-att/2r98520000012e0v.pdf"}, {"t": "C2：総務省「北見市役所の窓口サービス改善」", "u": "https://www.soumu.go.jp/main_content/000717141.pdf"}, {"t": "C2：愛媛県 取組事例（北見市 RPAを活用した窓口業務DX）", "u": "https://www.pref.ehime.jp/uploaded/attachment/101525.pdf"}, {"t": "C2：ITmedia「都城市・北見市はどう解決したのか」", "u": "https://www.itmedia.co.jp/business/articles/2506/17/news018.html"}, {"t": "C2：江別市 視察報告（北見市のBPRアドバイザー）", "u": "https://www.city.ebetsu.hokkaido.jp/uploaded/attachment/75782.pdf"}, {"t": "C2：総務省 窓口業務改革の効果（ワンストップ窓口）", "u": "https://www.soumu.go.jp/main_content/000611318.pdf"}, {"t": "C3：PCA導入事例（AGホールディングス）（ソフトウェア会社の導入事例）", "u": "https://pca.jp/area_product/casestudies/pdf/ag_holdings.pdf"}, {"t": "C4：労働政策研究・研修機構「ウェルフェア三重の働き方改革の取り組み」", "u": "https://www.jil.go.jp/kokunai/blt/backnumber/2024/11/shuzai_02.html"}]};
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const inline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+const slug=s=>"t-"+[...s].map(c=>c.charCodeAt(0).toString(36)).join("");
+
+/* ---- glossary ---- */
+const cats=[...new Set(D.terms.map(t=>t.cat))];
+let cat="すべて";
+$("#n-terms").textContent=D.terms.length+"語";
+$("#n-cases").textContent=D.cases.length+"件";
+$("#cats").innerHTML=["すべて",...cats].map(c=>`<button class="chip" aria-pressed="${c==="すべて"}" data-c="${esc(c)}">${esc(c.replace(/の言葉$/,""))}</button>`).join("");
+function termHTML(t){
+  const rel=t.rel.length?`<div class="rel"><b>関連</b>${t.rel.map(r=>r.startsWith("case:")?`<button data-case="${r.slice(5)}">事例${r.slice(5)}</button>`:`<button data-term="${esc(r)}">${esc(r)}</button>`).join("")}</div>`:"";
+  return `<details class="item" id="${slug(t.name)}"><summary><span class="name">${esc(t.name)}</span><span class="one">${inline(t.one)}</span></summary><div class="body">${t.body.map(p=>`<p>${inline(p)}</p>`).join("")}${rel}</div></details>`;
+}
+function renderTerms(){
+  const q=$("#q").value.trim().toLowerCase();
+  const hit=t=>(cat==="すべて"||t.cat===cat)&&(!q||(t.name+t.one+t.body.join("")).toLowerCase().includes(q));
+  let h="";
+  for(const c of cats){
+    const ts=D.terms.filter(t=>t.cat===c&&hit(t));
+    if(ts.length) h+=`<h2 class="cat">${esc(c)}</h2><div class="list">${ts.map(termHTML).join("")}</div>`;
+  }
+  $("#terms").innerHTML=h||`<p class="empty">「${esc(q)}」に当てはまる言葉はありません</p>`;
+}
+$("#q").addEventListener("input",renderTerms);
+$("#cats").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;cat=b.dataset.c;
+  document.querySelectorAll("#cats .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));renderTerms();});
+$("#gsrc").innerHTML=D.gsrc.map(s=>`<li>${esc(s.t)}${s.u?` <a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.u)}</a>`:""}</li>`).join("");
+$("#gnote").textContent=D.gnote?"※"+D.gnote:"";
+
+/* ---- cases ---- */
+const parts=[...new Set(D.cases.map(c=>c.part))];
+let part="すべて";
+$("#parts").innerHTML=["すべて",...parts].map(p=>`<button class="chip" aria-pressed="${p==="すべて"}" data-p="${esc(p)}">${esc(p)}</button>`).join("");
+function caseHTML(c){
+  const secs=c.secs.map(s=>{
+    const cls=s.label.startsWith("やめたこと")?"sec stop":s.label.startsWith("この事例")?"sec lesson":"sec";
+    return `<div class="${cls}"><h3>${esc(s.label)}${s.aside?` <small>${esc(s.aside)}</small>`:""}</h3>${s.html}</div>`;}).join("");
+  const name=c.title.replace(/（[^（）]+）$/,"");
+  return `<details class="item" id="case-${c.id}"><summary><span class="casehead"><span class="cid">${c.id}</span><span class="ctitle">${esc(name)}</span></span><span class="one">${esc(c.sub)}</span></summary><div class="body">${secs}</div></details>`;
+}
+function renderCases(){
+  let h="";
+  for(const p of parts){ if(part!=="すべて"&&p!==part) continue;
+    h+=`<h2 class="cat">${esc(p)}</h2><div class="list">${D.cases.filter(c=>c.part===p).map(caseHTML).join("")}</div>`;}
+  $("#caselist").innerHTML=h;
+}
+$("#parts").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;part=b.dataset.p;
+  document.querySelectorAll("#parts .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));renderCases();});
+$("#csrc").innerHTML=D.csrc.map(s=>`<li>${esc(s.t)}${s.u?` <a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.u)}</a>`:""}</li>`).join("");
+
+/* ---- tabs & links ---- */
+function show(v){
+  const g=v!=="cases";
+  $("#glossary").hidden=!g; $("#cases").hidden=g;
+  $("#tab-glossary").setAttribute("aria-selected",g); $("#tab-cases").setAttribute("aria-selected",!g);
+}
+$("#tab-glossary").onclick=()=>{history.replaceState(null,"","#glossary");show("glossary");scrollTo(0,0);};
+$("#tab-cases").onclick=()=>{history.replaceState(null,"","#cases");show("cases");scrollTo(0,0);};
+addEventListener("hashchange",()=>show(location.hash.slice(1)));
+function openAt(el){ if(!el) return; el.open=true; const y=el.getBoundingClientRect().top+scrollY-($("header").offsetHeight+8); scrollTo({top:y,behavior:"smooth"}); }
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-term]"), k=e.target.closest("[data-case]");
+  if(t){ $("#q").value=""; cat="すべて"; document.querySelectorAll("#cats .chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.c==="すべて")); renderTerms();
+    show("glossary"); openAt(document.getElementById(slug(t.dataset.term))); }
+  if(k){ part="すべて"; document.querySelectorAll("#parts .chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.p==="すべて")); renderCases();
+    history.replaceState(null,"","#cases"); show("cases"); openAt(document.getElementById("case-"+k.dataset.case)); }
+});
+renderTerms(); renderCases(); show(location.hash.slice(1)); requestAnimationFrame(()=>scrollTo(0,0));
+</script>
+</body>
+</html>
